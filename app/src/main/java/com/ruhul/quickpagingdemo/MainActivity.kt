@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ruhul.quickpagingdemo.databinding.ActivityMainBinding
@@ -12,13 +13,14 @@ import com.ruhul.quickpagingdemo.paging.QuotePagingAdapter
 import com.ruhul.quickpagingdemo.viewmodels.QuoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var quoteViewModel: QuoteViewModel
-    lateinit var adapter: QuotePagingAdapter
+    private lateinit var quoteViewModel: QuoteViewModel
+    private lateinit var adapter: QuotePagingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
