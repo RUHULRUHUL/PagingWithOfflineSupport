@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/SHOW_PROGRESS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ProgressBar>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ErrorMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="could_not_be_loaded"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:visibility="gone">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/RetryBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:backgroundTint="@color/teal_700"
+            android:text="retry"
+            android:textColor="@color/white"
+            android:visibility="gone">
+
+        </com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
+</layout>
