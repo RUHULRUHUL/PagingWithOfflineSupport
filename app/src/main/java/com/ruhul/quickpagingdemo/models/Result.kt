@@ -13,6 +13,5 @@ data class Result(
     val content: String,
     val dateAdded: String,
     val dateModified: String,
-    val length: Int,
-    val tags: List<String>
+    val length: Int
 )

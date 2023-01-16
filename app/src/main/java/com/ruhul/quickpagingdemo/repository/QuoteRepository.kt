@@ -14,8 +14,6 @@ class QuoteRepository @Inject constructor(
     private val quoteAPI: QuoteAPI,
     private val quoteDB: QuoteDB
 ) {
-
-    @OptIn(ExperimentalPagingApi::class)
     fun getQuotes() = Pager(
         config = PagingConfig(pageSize = 20, maxSize = 100),
         remoteMediator = QuoteRemoteMediator(quoteAPI, quoteDB),

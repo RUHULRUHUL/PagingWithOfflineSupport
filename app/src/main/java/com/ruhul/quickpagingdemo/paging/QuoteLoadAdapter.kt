@@ -24,10 +24,15 @@ class QuoteLoadAdapter() : LoadStateAdapter<QuoteLoadAdapter.ViewHolder>() {
         )
     }
 
-    inner class ViewHolder(private val binding: ItemLoadStateBinding) :
+    class ViewHolder(private val binding: ItemLoadStateBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(loadState: LoadState) {
             binding.SHOWPROGRESS.isVisible = loadState is LoadState.Loading
+
+
+            if (loadState is LoadState.Error){
+
+            }
 
         }
     }

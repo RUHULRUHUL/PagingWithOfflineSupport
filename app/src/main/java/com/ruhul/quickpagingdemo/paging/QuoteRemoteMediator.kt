@@ -1,5 +1,6 @@
 package com.ruhul.quickpagingdemo.paging
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -16,6 +17,8 @@ class QuoteRemoteMediator(
     private val quoteDB: QuoteDB,
 ) : RemoteMediator<Int, Result>() {
 
+    private val logDebug = "QuoteRemoteMediator"
+
     private val quoteDao = quoteDB.quoteDao()
     private val remoteKeyDao = quoteDB.remoteKeyDao()
 
@@ -23,10 +26,12 @@ class QuoteRemoteMediator(
         return try {
             val currentPage = when (loadType) {
                 LoadType.REFRESH -> {
+                    Log.d(logDebug, "LoadType.REFRESH ")
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                     remoteKeys?.nexKey?.minus(1) ?: 1
                 }
                 LoadType.PREPEND -> {
+                    Log.d(logDebug, "LoadType.PREPEND ")
                     val remoteKeys = getRemoteKeyForFirstItem(state)
                     val prevPage = remoteKeys?.preKey
                         ?: return MediatorResult.Success(
@@ -35,6 +40,7 @@ class QuoteRemoteMediator(
                     prevPage
                 }
                 LoadType.APPEND -> {
+                    Log.d(logDebug, "LoadType.APPEND ")
                     val remoteKeys = getRemoteKeyForLastItem(state)
                     val nextPage = remoteKeys?.nexKey
                         ?: return MediatorResult.Success(
@@ -44,6 +50,8 @@ class QuoteRemoteMediator(
                 }
             }
 
+            Log.d(logDebug, "current Page: $currentPage")
+
             val response = quoteAPI.getQuotes(currentPage)
             val endOfPaginationReached = response.totalPages == currentPage
 
@@ -51,6 +59,15 @@ class QuoteRemoteMediator(
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
 
             quoteDB.withTransaction {
+
+                if (loadType == LoadType.REFRESH) {
+
+                    Log.d(logDebug, "current Page withTransaction: LoadType.REFRESH")
+
+                    quoteDao.deleteQuotes()
+                    remoteKeyDao.DeleteAllRemoteKey()
+                }
+
                 quoteDao.insertQuotes(response.results)
                 val keys = response.results.map {
                     QuoteRemoteKey(
@@ -61,6 +78,7 @@ class QuoteRemoteMediator(
                 }
                 remoteKeyDao.insertAllRemoteKey(keys)
             }
+            Log.d(logDebug, "current Page withTransaction:  MediatorResult.Success")
             MediatorResult.Success(endOfPaginationReached)
 
         } catch (e: Exception) {
@@ -83,10 +101,11 @@ class QuoteRemoteMediator(
     private suspend fun getRemoteKeyForFirstItem(
         state: PagingState<Int, Result>
     ): QuoteRemoteKey? {
-        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { quote ->
-                remoteKeyDao.getQuotesKey(id = quote._id)
-            }
+        return state.pages.firstOrNull {
+            it.data.isNotEmpty()
+        }?.data?.firstOrNull()?.let {
+            remoteKeyDao.getQuotesKey(id = it._id)
+        }
     }
 
     private suspend fun getRemoteKeyForLastItem(

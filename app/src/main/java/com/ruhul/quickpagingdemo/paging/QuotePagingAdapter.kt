@@ -8,27 +8,24 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ruhul.quickpagingdemo.R
+import com.ruhul.quickpagingdemo.databinding.ItemQuoteLayoutBinding
 import com.ruhul.quickpagingdemo.models.Result
 
 class QuotePagingAdapter :
     PagingDataAdapter<Result, QuotePagingAdapter.QuoteViewHolder>(COMPARATOR) {
 
-    class QuoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val quote = itemView.findViewById<TextView>(R.id.quote)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuoteViewHolder {
+        return QuoteViewHolder(ItemQuoteLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun onBindViewHolder(holder: QuoteViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null) {
-            holder.quote.text = item.content
+            holder.binding.quote.text = item.content
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuoteViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_quote_layout, parent, false)
-        return QuoteViewHolder(view)
-    }
+    class QuoteViewHolder( val binding: ItemQuoteLayoutBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Result>() {

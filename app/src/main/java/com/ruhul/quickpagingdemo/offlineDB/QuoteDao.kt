@@ -11,7 +11,7 @@ interface QuoteDao {
     suspend fun insertQuotes(lists: List<Result>)
 
     @Query("delete from Quotes")
-    fun deleteQuotes()
+    suspend fun deleteQuotes()
 
     @Query("SELECT * FROM Quotes")
     fun getQuotes(): PagingSource<Int, Result>

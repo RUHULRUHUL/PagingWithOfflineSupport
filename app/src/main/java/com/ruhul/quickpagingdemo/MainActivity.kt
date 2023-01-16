@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.RV.layoutManager = LinearLayoutManager(this)
         binding.RV.setHasFixedSize(true)
+
         binding.RV.adapter = adapter.withLoadStateHeaderAndFooter(
             QuoteLoadAdapter(),
             QuoteLoadAdapter()
