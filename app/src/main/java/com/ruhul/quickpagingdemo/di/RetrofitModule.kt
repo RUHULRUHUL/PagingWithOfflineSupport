@@ -25,7 +25,6 @@ class RetrofitModule {
         .connectTimeout(60, TimeUnit.SECONDS)
         .build()
 
-
     @Singleton
     @Provides
     fun getRetrofit(): Retrofit {

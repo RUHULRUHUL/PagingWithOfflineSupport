@@ -5,7 +5,7 @@ import com.ruhul.quickpagingdemo.models.QuoteRemoteKey
 
 @Dao
 interface RemoteKeyDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllRemoteKey(remoteKeys: List<QuoteRemoteKey>)
 
     @Query("select * from QuoteRemoteKey where id =:id")

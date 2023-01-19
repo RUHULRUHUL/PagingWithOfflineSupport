@@ -7,7 +7,7 @@ import androidx.room.*
 @Dao
 interface QuoteDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertQuotes(lists: List<Result>)
 
     @Query("delete from Quotes")

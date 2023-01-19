@@ -1,6 +1,7 @@
 package com.ruhul.quickpagingdemo.paging
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
@@ -28,12 +29,6 @@ class QuoteLoadAdapter() : LoadStateAdapter<QuoteLoadAdapter.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(loadState: LoadState) {
             binding.SHOWPROGRESS.isVisible = loadState is LoadState.Loading
-
-
-            if (loadState is LoadState.Error){
-
-            }
-
         }
     }
 }

@@ -16,9 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @ExperimentalPagingApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var quoteViewModel: QuoteViewModel
     private lateinit var adapter: QuotePagingAdapter
 
@@ -28,17 +26,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         quoteViewModel = ViewModelProvider(this)[QuoteViewModel::class.java]
-
         adapter = QuotePagingAdapter()
-
         binding.RV.layoutManager = LinearLayoutManager(this)
         binding.RV.setHasFixedSize(true)
-
         binding.RV.adapter = adapter.withLoadStateHeaderAndFooter(
             QuoteLoadAdapter(),
             QuoteLoadAdapter()
         )
-
         quoteViewModel.list.observe(this, Observer {
             adapter.submitData(lifecycle, it)
         })

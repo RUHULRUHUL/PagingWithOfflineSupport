@@ -2,6 +2,7 @@ package com.ruhul.quickpagingdemo.offlineDB
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +17,9 @@ class DataBaseModule {
     @Provides
     @Singleton
     fun provideDataBase(@ApplicationContext context: Context): QuoteDB {
-        return Room.databaseBuilder(context, QuoteDB::class.java, "QuoteDB").build()
+        return Room.databaseBuilder(context, QuoteDB::class.java, "QuoteDB")
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

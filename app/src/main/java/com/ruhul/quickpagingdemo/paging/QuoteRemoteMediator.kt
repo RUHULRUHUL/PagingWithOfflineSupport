@@ -16,9 +16,7 @@ class QuoteRemoteMediator(
     private val quoteAPI: QuoteAPI,
     private val quoteDB: QuoteDB,
 ) : RemoteMediator<Int, Result>() {
-
     private val logDebug = "QuoteRemoteMediator"
-
     private val quoteDao = quoteDB.quoteDao()
     private val remoteKeyDao = quoteDB.remoteKeyDao()
 
@@ -61,9 +59,7 @@ class QuoteRemoteMediator(
             quoteDB.withTransaction {
 
                 if (loadType == LoadType.REFRESH) {
-
                     Log.d(logDebug, "current Page withTransaction: LoadType.REFRESH")
-
                     quoteDao.deleteQuotes()
                     remoteKeyDao.DeleteAllRemoteKey()
                 }

@@ -15,7 +15,13 @@ class QuotePagingAdapter :
     PagingDataAdapter<Result, QuotePagingAdapter.QuoteViewHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuoteViewHolder {
-        return QuoteViewHolder(ItemQuoteLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return QuoteViewHolder(
+            ItemQuoteLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: QuoteViewHolder, position: Int) {
@@ -25,7 +31,8 @@ class QuotePagingAdapter :
         }
     }
 
-    class QuoteViewHolder( val binding: ItemQuoteLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    class QuoteViewHolder(val binding: ItemQuoteLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Result>() {

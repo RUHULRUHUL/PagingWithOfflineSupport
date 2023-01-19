@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
+import com.ruhul.quickpagingdemo.models.QuoteList
 import com.ruhul.quickpagingdemo.offlineDB.QuoteDB
 import com.ruhul.quickpagingdemo.paging.QuoteRemoteMediator
 import com.ruhul.quickpagingdemo.retrofit.QuoteAPI
@@ -15,8 +16,12 @@ class QuoteRepository @Inject constructor(
     private val quoteDB: QuoteDB
 ) {
     fun getQuotes() = Pager(
-        config = PagingConfig(pageSize = 20, maxSize = 100),
+        config = PagingConfig(
+            pageSize = 10,
+            initialLoadSize = 20,
+        ),
         remoteMediator = QuoteRemoteMediator(quoteAPI, quoteDB),
         pagingSourceFactory = { quoteDB.quoteDao().getQuotes() }
     ).liveData
+
 }
